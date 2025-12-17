@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: todo
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/todo
+    username: admin
+    password: admin
+
+  jpa:
+    hibernate:
+      ddl-auto: update
