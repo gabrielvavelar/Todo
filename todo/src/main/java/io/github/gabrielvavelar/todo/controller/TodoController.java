@@ -1,5 +1,8 @@
 package io.github.gabrielvavelar.todo.controller;
 
+import io.github.gabrielvavelar.todo.dto.TodoRequestDto;
+import io.github.gabrielvavelar.todo.dto.TodoResponseDto;
+import io.github.gabrielvavelar.todo.mapper.TodoMapper;
 import io.github.gabrielvavelar.todo.model.Todo;
 import io.github.gabrielvavelar.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
@@ -15,10 +18,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TodoController {
     private final TodoService todoService;
+    private final TodoMapper todoMapper;
 
-    @PostMapping("/")
-    public ResponseEntity<Todo> addTodo(@RequestBody Todo todo) {
-        return  ResponseEntity.status(HttpStatus.CREATED).body(todoService.save(todo));
+    @PostMapping
+    public ResponseEntity<TodoResponseDto> createTodo(@RequestBody TodoRequestDto dto) {
+        Todo saved = todoService.save(todoMapper.toEntity(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(todoMapper.toResponse(saved));
     }
 
     @DeleteMapping("/{id}")
@@ -28,13 +33,16 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Todo> updateTodo(@PathVariable UUID id, @RequestBody Todo todo) {
-        return  ResponseEntity.status(HttpStatus.OK).body(todoService.update(id, todo));
+    public ResponseEntity<TodoResponseDto> updateTodo(@PathVariable UUID id, @RequestBody TodoRequestDto dto) {
+        Todo updated = todoService.update(id, todoMapper.toEntity(dto));
+        return ResponseEntity.ok(todoMapper.toResponse(updated));
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<Todo>> getAllTodos() {
-        return ResponseEntity.ok(todoService.getAll());
+    @GetMapping
+    public ResponseEntity<List<TodoResponseDto>> getAllTodos() {
+        return ResponseEntity.ok(
+                todoService.getAll().stream().map(todoMapper::toResponse).toList()
+        );
     }
 
 
