@@ -5,6 +5,7 @@ import io.github.gabrielvavelar.todo.dto.TodoResponseDto;
 import io.github.gabrielvavelar.todo.mapper.TodoMapper;
 import io.github.gabrielvavelar.todo.model.Todo;
 import io.github.gabrielvavelar.todo.service.TodoService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +22,7 @@ public class TodoController {
     private final TodoMapper todoMapper;
 
     @PostMapping
-    public ResponseEntity<TodoResponseDto> createTodo(@RequestBody TodoRequestDto dto) {
+    public ResponseEntity<TodoResponseDto> createTodo(@RequestBody @Valid TodoRequestDto dto) {
         Todo saved = todoService.save(todoMapper.toEntity(dto));
         return ResponseEntity.status(HttpStatus.CREATED).body(todoMapper.toResponse(saved));
     }
@@ -33,7 +34,7 @@ public class TodoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TodoResponseDto> updateTodo(@PathVariable UUID id, @RequestBody TodoRequestDto dto) {
+    public ResponseEntity<TodoResponseDto> updateTodo(@PathVariable UUID id, @RequestBody @Valid TodoRequestDto dto) {
         Todo updated = todoService.update(id, todoMapper.toEntity(dto));
         return ResponseEntity.ok(todoMapper.toResponse(updated));
     }

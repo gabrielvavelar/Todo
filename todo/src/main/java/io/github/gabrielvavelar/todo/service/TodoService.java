@@ -1,5 +1,6 @@
 package io.github.gabrielvavelar.todo.service;
 
+import io.github.gabrielvavelar.todo.exception.TodoNotFoundException;
 import io.github.gabrielvavelar.todo.model.Todo;
 import io.github.gabrielvavelar.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,12 +19,15 @@ public class TodoService {
     }
 
     public void delete(UUID id) {
-        todoRepository.deleteById(id);
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new TodoNotFoundException("Todo not found"));
+
+        todoRepository.delete(todo);
     }
 
     public Todo update(UUID id, Todo updatedTodo) {
         Todo todo = todoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Todo not found"));
+                .orElseThrow(() -> new TodoNotFoundException("Todo not found"));
 
         todo.setTitle(updatedTodo.getTitle());
         todo.setDescription(updatedTodo.getDescription());
