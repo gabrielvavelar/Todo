@@ -3,13 +3,14 @@ package io.github.gabrielvavelar.todo.mapper;
 import io.github.gabrielvavelar.todo.dto.TodoRequestDto;
 import io.github.gabrielvavelar.todo.dto.TodoResponseDto;
 import io.github.gabrielvavelar.todo.model.Todo;
+import java.time.LocalDate;
 import java.util.UUID;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-18T10:50:29-0300",
+    date = "2025-12-19T10:34:19-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.7 (Eclipse Adoptium)"
 )
 @Component
@@ -23,8 +24,8 @@ public class TodoMapperImpl implements TodoMapper {
 
         Todo todo = new Todo();
 
-        todo.setTitle( todoRequest.title() );
         todo.setDescription( todoRequest.description() );
+        todo.setDate( todoRequest.date() );
         if ( todoRequest.done() != null ) {
             todo.setDone( todoRequest.done() );
         }
@@ -39,16 +40,16 @@ public class TodoMapperImpl implements TodoMapper {
         }
 
         UUID id = null;
-        String title = null;
         String description = null;
+        LocalDate date = null;
         Boolean done = null;
 
         id = todo.getId();
-        title = todo.getTitle();
         description = todo.getDescription();
+        date = todo.getDate();
         done = todo.isDone();
 
-        TodoResponseDto todoResponseDto = new TodoResponseDto( id, title, description, done );
+        TodoResponseDto todoResponseDto = new TodoResponseDto( id, description, date, done );
 
         return todoResponseDto;
     }

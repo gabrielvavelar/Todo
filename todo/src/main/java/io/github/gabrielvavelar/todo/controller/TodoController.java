@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/todo")
 @RequiredArgsConstructor
@@ -44,6 +45,12 @@ public class TodoController {
         return ResponseEntity.ok(
                 todoService.getAll().stream().map(todoMapper::toResponse).toList()
         );
+    }
+
+    @PutMapping("/{id}/done")
+    public ResponseEntity<TodoResponseDto> toggleDone(@PathVariable UUID id) {
+        Todo updated = todoService.toggleDone(id);
+        return ResponseEntity.ok(todoMapper.toResponse(updated));
     }
 
 

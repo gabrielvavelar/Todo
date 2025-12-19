@@ -1,11 +1,13 @@
 package io.github.gabrielvavelar.todo.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 
+import java.time.LocalDate;
+
 public record TodoRequestDto(
-        @NotBlank(message = "Title must not be blank")
-        String title,
         @NotBlank(message = "Description must not be blank")
         String description,
-        Boolean done
+        @JsonFormat(pattern = "yyyy-MM-dd")
+        LocalDate date
 ) {}

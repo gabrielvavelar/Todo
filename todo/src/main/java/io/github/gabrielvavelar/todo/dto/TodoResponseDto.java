@@ -1,10 +1,11 @@
 package io.github.gabrielvavelar.todo.dto;
 
+import java.time.LocalDate;
 import java.util.UUID;
 
 public record TodoResponseDto(
         UUID id,
-        String title,
         String description,
+        LocalDate date,
         Boolean done
 ) {}

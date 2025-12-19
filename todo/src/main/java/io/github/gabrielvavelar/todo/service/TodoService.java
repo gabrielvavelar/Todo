@@ -29,15 +29,22 @@ public class TodoService {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow(() -> new TodoNotFoundException("Todo not found"));
 
-        todo.setTitle(updatedTodo.getTitle());
         todo.setDescription(updatedTodo.getDescription());
-        todo.setDone(updatedTodo.isDone());
 
         return todoRepository.save(todo);
     }
 
     public List<Todo> getAll() {
         return todoRepository.findAll();
+    }
+
+    public Todo toggleDone(UUID id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow(() -> new TodoNotFoundException("Todo not found"));
+
+        todo.setDone(!todo.isDone());
+
+        return todoRepository.save(todo);
     }
 
 }
