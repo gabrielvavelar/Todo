@@ -2,8 +2,6 @@ package io.github.gabrielvavelar.todo.todo.controller;
 
 import io.github.gabrielvavelar.todo.todo.dto.TodoRequestDto;
 import io.github.gabrielvavelar.todo.todo.dto.TodoResponseDto;
-import io.github.gabrielvavelar.todo.todo.mapper.TodoMapper;
-import io.github.gabrielvavelar.todo.todo.model.Todo;
 import io.github.gabrielvavelar.todo.todo.service.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +18,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TodoController {
     private final TodoService todoService;
-    private final TodoMapper todoMapper;
 
     @PostMapping
     public ResponseEntity<TodoResponseDto> createTodo(@RequestBody @Valid TodoRequestDto dto) {
-        Todo saved = todoService.save(todoMapper.toEntity(dto));
-        return ResponseEntity.status(HttpStatus.CREATED).body(todoMapper.toResponse(saved));
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(todoService.save(dto));
     }
 
     @DeleteMapping("/{id}")
@@ -36,21 +34,17 @@ public class TodoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<TodoResponseDto> updateTodo(@PathVariable UUID id, @RequestBody @Valid TodoRequestDto dto) {
-        Todo updated = todoService.update(id, todoMapper.toEntity(dto));
-        return ResponseEntity.ok(todoMapper.toResponse(updated));
+        return ResponseEntity.ok(todoService.update(id,dto));
     }
 
     @GetMapping
     public ResponseEntity<List<TodoResponseDto>> getAllTodos() {
-        return ResponseEntity.ok(
-                todoService.getAll().stream().map(todoMapper::toResponse).toList()
-        );
+        return ResponseEntity.ok(todoService.getAll());
     }
 
     @PutMapping("/{id}/done")
     public ResponseEntity<TodoResponseDto> toggleDone(@PathVariable UUID id) {
-        Todo updated = todoService.toggleDone(id);
-        return ResponseEntity.ok(todoMapper.toResponse(updated));
+        return ResponseEntity.ok(todoService.toggleDone(id));
     }
 
 
