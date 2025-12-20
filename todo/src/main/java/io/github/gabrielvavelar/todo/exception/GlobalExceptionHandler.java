@@ -1,6 +1,7 @@
 package io.github.gabrielvavelar.todo.exception;
 
-import io.github.gabrielvavelar.todo.dto.ErrorResponseDto;
+import io.github.gabrielvavelar.todo.todo.dto.ErrorResponseDto;
+import io.github.gabrielvavelar.todo.todo.exception.TodoNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

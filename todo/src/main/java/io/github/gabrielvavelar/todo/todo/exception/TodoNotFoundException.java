@@ -1,4 +1,4 @@
-package io.github.gabrielvavelar.todo.exception;
+package io.github.gabrielvavelar.todo.todo.exception;
 
 public class TodoNotFoundException extends RuntimeException{
     public TodoNotFoundException(String message){

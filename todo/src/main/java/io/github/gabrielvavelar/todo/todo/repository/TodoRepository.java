@@ -1,6 +1,6 @@
-package io.github.gabrielvavelar.todo.repository;
+package io.github.gabrielvavelar.todo.todo.repository;
 
-import io.github.gabrielvavelar.todo.model.Todo;
+import io.github.gabrielvavelar.todo.todo.model.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,4 +1,4 @@
-package io.github.gabrielvavelar.todo.model;
+package io.github.gabrielvavelar.todo.todo.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

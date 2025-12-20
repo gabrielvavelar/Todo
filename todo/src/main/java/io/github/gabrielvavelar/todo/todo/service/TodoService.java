@@ -1,8 +1,8 @@
-package io.github.gabrielvavelar.todo.service;
+package io.github.gabrielvavelar.todo.todo.service;
 
-import io.github.gabrielvavelar.todo.exception.TodoNotFoundException;
-import io.github.gabrielvavelar.todo.model.Todo;
-import io.github.gabrielvavelar.todo.repository.TodoRepository;
+import io.github.gabrielvavelar.todo.todo.exception.TodoNotFoundException;
+import io.github.gabrielvavelar.todo.todo.model.Todo;
+import io.github.gabrielvavelar.todo.todo.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

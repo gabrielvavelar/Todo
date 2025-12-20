@@ -1,0 +1,13 @@
+package io.github.gabrielvavelar.todo.todo.mapper;
+
+import io.github.gabrielvavelar.todo.todo.dto.TodoRequestDto;
+import io.github.gabrielvavelar.todo.todo.dto.TodoResponseDto;
+import io.github.gabrielvavelar.todo.todo.model.Todo;
+import org.mapstruct.Mapper;
+
+@Mapper(componentModel = "spring")
+public interface TodoMapper {
+    Todo toEntity(TodoRequestDto todoRequest);
+
+    TodoResponseDto toResponse(Todo todo);
+}

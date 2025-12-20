@@ -1,10 +1,10 @@
-package io.github.gabrielvavelar.todo.controller;
+package io.github.gabrielvavelar.todo.todo.controller;
 
-import io.github.gabrielvavelar.todo.dto.TodoRequestDto;
-import io.github.gabrielvavelar.todo.dto.TodoResponseDto;
-import io.github.gabrielvavelar.todo.mapper.TodoMapper;
-import io.github.gabrielvavelar.todo.model.Todo;
-import io.github.gabrielvavelar.todo.service.TodoService;
+import io.github.gabrielvavelar.todo.todo.dto.TodoRequestDto;
+import io.github.gabrielvavelar.todo.todo.dto.TodoResponseDto;
+import io.github.gabrielvavelar.todo.todo.mapper.TodoMapper;
+import io.github.gabrielvavelar.todo.todo.model.Todo;
+import io.github.gabrielvavelar.todo.todo.service.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

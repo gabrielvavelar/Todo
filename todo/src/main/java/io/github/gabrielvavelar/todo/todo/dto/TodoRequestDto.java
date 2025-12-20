@@ -1,4 +1,4 @@
-package io.github.gabrielvavelar.todo.dto;
+package io.github.gabrielvavelar.todo.todo.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
