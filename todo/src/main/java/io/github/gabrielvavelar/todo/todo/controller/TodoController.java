@@ -26,25 +26,25 @@ public class TodoController {
                 .body(todoService.save(dto));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTodo(@PathVariable UUID id) {
-        todoService.delete(id);
+    @DeleteMapping("/{todoId}")
+    public ResponseEntity<Void> deleteTodo(@PathVariable UUID todoId, @RequestBody @Valid TodoRequestDto dto) {
+        todoService.delete(todoId, dto.userId());
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<TodoResponseDto> updateTodo(@PathVariable UUID id, @RequestBody @Valid TodoRequestDto dto) {
-        return ResponseEntity.ok(todoService.update(id,dto));
+    @PutMapping("/{todoId}")
+    public ResponseEntity<TodoResponseDto> updateTodo(@PathVariable UUID todoId, @RequestBody @Valid TodoRequestDto dto) {
+        return ResponseEntity.ok(todoService.update(todoId,dto));
     }
 
-    @GetMapping
-    public ResponseEntity<List<TodoResponseDto>> getAllTodos() {
-        return ResponseEntity.ok(todoService.getAll());
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<TodoResponseDto>> getAllTodos(@PathVariable UUID userId) {
+        return ResponseEntity.ok(todoService.getAll(userId));
     }
 
-    @PutMapping("/{id}/done")
-    public ResponseEntity<TodoResponseDto> toggleDone(@PathVariable UUID id) {
-        return ResponseEntity.ok(todoService.toggleDone(id));
+    @PutMapping("/{todoId}/done")
+    public ResponseEntity<TodoResponseDto> toggleDone(@PathVariable UUID todoId, @RequestBody @Valid TodoRequestDto dto) {
+        return ResponseEntity.ok(todoService.toggleDone(todoId, dto.userId()));
     }
 
 
