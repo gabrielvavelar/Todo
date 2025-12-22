@@ -1,5 +1,7 @@
 package io.github.gabrielvavelar.todo.user.controller;
 
+import io.github.gabrielvavelar.todo.user.dto.UserRequestDto;
+import io.github.gabrielvavelar.todo.user.dto.UserResponseDto;
 import io.github.gabrielvavelar.todo.user.model.User;
 import io.github.gabrielvavelar.todo.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +19,9 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> createUser(@RequestBody User user) {
+    public ResponseEntity<UserResponseDto> createUser(@RequestBody UserRequestDto dto) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(userService.save(user));
+                .body(userService.save(dto));
     }
 }

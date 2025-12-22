@@ -1,5 +1,8 @@
 package io.github.gabrielvavelar.todo.user.service;
 
+import io.github.gabrielvavelar.todo.user.dto.UserRequestDto;
+import io.github.gabrielvavelar.todo.user.dto.UserResponseDto;
+import io.github.gabrielvavelar.todo.user.mapper.UserMapper;
 import io.github.gabrielvavelar.todo.user.model.User;
 import io.github.gabrielvavelar.todo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +19,13 @@ import java.util.UUID;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public User save(User user) {
+    public UserResponseDto save(UserRequestDto dto) {
+        User user = userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
 
-    public User findById(UUID id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        User saved = userRepository.save(user);
+        return userMapper.toResponse(saved);
     }
 }
