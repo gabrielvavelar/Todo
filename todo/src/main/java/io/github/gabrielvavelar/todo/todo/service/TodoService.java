@@ -1,5 +1,6 @@
 package io.github.gabrielvavelar.todo.todo.service;
 
+import io.github.gabrielvavelar.todo.security.UserPrincipal;
 import io.github.gabrielvavelar.todo.todo.dto.TodoRequestDto;
 import io.github.gabrielvavelar.todo.todo.dto.TodoResponseDto;
 import io.github.gabrielvavelar.todo.todo.exception.TodoNotFoundException;
@@ -19,25 +20,28 @@ import java.util.UUID;
 public class TodoService {
     private final TodoRepository todoRepository;
     private final TodoMapper todoMapper;
-    private final UserService userService;
 
-    public TodoResponseDto save(TodoRequestDto dto) {
-        User user = userService.findById(dto.userId());
+    public TodoResponseDto save(TodoRequestDto dto, UserPrincipal userPrincipal) {
+        User user = userPrincipal.getUser();
+
         Todo todo = todoMapper.toEntity(dto);
         todo.setUser(user);
+
         Todo saved = todoRepository.save(todo);
         return todoMapper.toResponse(saved);
     }
 
-    public void delete(UUID todoId, UUID userId) {
-        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, userId)
+    public void delete(UUID todoId, UserPrincipal userPrincipal) {
+        User user = userPrincipal.getUser();
+        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, user.getId())
                 .orElseThrow(() -> new TodoNotFoundException("Todo not found"));
 
         todoRepository.delete(todo);
     }
 
-    public TodoResponseDto update(UUID todoId, TodoRequestDto dto) {
-        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, dto.userId())
+    public TodoResponseDto update(UUID todoId, TodoRequestDto dto, UserPrincipal userPrincipal) {
+        User user = userPrincipal.getUser();
+        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, user.getId())
                 .orElseThrow(() -> new TodoNotFoundException("Todo not found"));
 
         todo.setDescription(dto.description());
@@ -45,20 +49,23 @@ public class TodoService {
         return todoMapper.toResponse(updated);
     }
 
-    public List<TodoResponseDto> getAll(UUID userId) {
-        return todoRepository.findByUserId(userId)
+    public List<TodoResponseDto> getAll(UserPrincipal userPrincipal) {
+        User user = userPrincipal.getUser();
+
+        return todoRepository.findByUserId(user.getId())
                 .stream()
                 .map(todoMapper::toResponse)
                 .toList();
     }
 
-    public TodoResponseDto toggleDone(UUID todoId, UUID userId) {
-        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, userId)
+    public TodoResponseDto toggleDone(UUID todoId, UserPrincipal userPrincipal) {
+        User user = userPrincipal.getUser();
+
+        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, user.getId())
                 .orElseThrow(() -> new TodoNotFoundException("Todo not found"));
 
         todo.setDone(!todo.isDone());
         Todo saved = todoRepository.save(todo);
         return todoMapper.toResponse(saved);
     }
-
 }
