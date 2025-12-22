@@ -2,6 +2,7 @@ package io.github.gabrielvavelar.todo.user.service;
 
 import io.github.gabrielvavelar.todo.user.dto.UserRequestDto;
 import io.github.gabrielvavelar.todo.user.dto.UserResponseDto;
+import io.github.gabrielvavelar.todo.user.exception.UsernameAlreadyExistsException;
 import io.github.gabrielvavelar.todo.user.mapper.UserMapper;
 import io.github.gabrielvavelar.todo.user.model.User;
 import io.github.gabrielvavelar.todo.user.repository.UserRepository;
@@ -23,7 +24,7 @@ public class UserService {
 
     public UserResponseDto save(UserRequestDto dto) {
         if(userRepository.existsByUsername(dto.username()))
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists");
+            throw new UsernameAlreadyExistsException(dto.username());
 
         User user = userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
