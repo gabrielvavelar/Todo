@@ -16,7 +16,7 @@ public class AuthenticationService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) {
         return userRepository.findByUsername(username)
                 .map(UserPrincipal::new)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(username));
         }
 
 }

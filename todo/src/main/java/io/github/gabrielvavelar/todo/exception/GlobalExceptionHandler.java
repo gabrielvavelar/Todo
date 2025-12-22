@@ -1,7 +1,7 @@
 package io.github.gabrielvavelar.todo.exception;
 
-import io.github.gabrielvavelar.todo.todo.dto.ErrorResponseDto;
 import io.github.gabrielvavelar.todo.todo.exception.TodoNotFoundException;
+import io.github.gabrielvavelar.todo.user.exception.UsernameAlreadyExistsException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,18 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleTodoNotFoundException(TodoNotFoundException ex, HttpServletRequest request) {
         ErrorResponseDto error = new ErrorResponseDto(
                 HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(UsernameAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponseDto> handleUsernameAlreadyExistsException(UsernameAlreadyExistsException ex, HttpServletRequest request) {
+        ErrorResponseDto error = new ErrorResponseDto(
+                HttpStatus.CONFLICT.value(),
                 ex.getMessage(),
                 request.getRequestURI(),
                 LocalDateTime.now()

@@ -1,4 +1,4 @@
-package io.github.gabrielvavelar.todo.todo.dto;
+package io.github.gabrielvavelar.todo.exception;
 
 import java.time.LocalDateTime;
 
