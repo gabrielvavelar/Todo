@@ -22,6 +22,9 @@ public class UserService {
     private final UserMapper userMapper;
 
     public UserResponseDto save(UserRequestDto dto) {
+        if(userRepository.existsByUsername(dto.username()))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists");
+
         User user = userMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
