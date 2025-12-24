@@ -22,4 +22,12 @@ public class Todo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Todo() {}
+
+    public Todo(String description, LocalDate date, User user) {
+        this.description = description;
+        this.date = date;
+        this.user = user;
+    }
 }
