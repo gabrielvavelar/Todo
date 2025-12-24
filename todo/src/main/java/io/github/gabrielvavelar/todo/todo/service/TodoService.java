@@ -33,7 +33,7 @@ public class TodoService {
 
     public void delete(UUID todoId, UserPrincipal userPrincipal) {
         User user = userPrincipal.getUser();
-        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, user.getId())
+        Todo todo = todoRepository.findByIdAndUserId(todoId, user.getId())
                 .orElseThrow(() -> new TodoNotFoundException());
 
         todoRepository.delete(todo);
@@ -41,7 +41,7 @@ public class TodoService {
 
     public TodoResponseDto update(UUID todoId, TodoRequestDto dto, UserPrincipal userPrincipal) {
         User user = userPrincipal.getUser();
-        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, user.getId())
+        Todo todo = todoRepository.findByIdAndUserId(todoId, user.getId())
                 .orElseThrow(() -> new TodoNotFoundException());
 
         todo.setDescription(dto.description());
@@ -52,7 +52,7 @@ public class TodoService {
     public List<TodoResponseDto> getAll(UserPrincipal userPrincipal) {
         User user = userPrincipal.getUser();
 
-        return todoRepository.findByUserId(user.getId())
+        return todoRepository.findAllByUserId(user.getId())
                 .stream()
                 .map(todoMapper::toResponse)
                 .toList();
@@ -61,7 +61,7 @@ public class TodoService {
     public TodoResponseDto toggleDone(UUID todoId, UserPrincipal userPrincipal) {
         User user = userPrincipal.getUser();
 
-        Todo todo = todoRepository.findTodoByIdAndUserId(todoId, user.getId())
+        Todo todo = todoRepository.findByIdAndUserId(todoId, user.getId())
                 .orElseThrow(() -> new TodoNotFoundException());
 
         todo.setDone(!todo.isDone());
