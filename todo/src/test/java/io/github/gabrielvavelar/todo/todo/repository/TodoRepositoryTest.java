@@ -27,13 +27,13 @@ class TodoRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        user = new User("User", "123");
+        user = new User("username", "password");
         userRepository.save(user);
 
         List<Todo> todos = List.of(
-                new Todo("Todo_1",  LocalDate.of(2025, 1, 1), user),
-                new Todo("Todo_2",  LocalDate.of(2025, 1, 1), user),
-                new Todo("Todo_3",  LocalDate.of(2025, 1, 1), user)
+                new Todo("todo_1",  LocalDate.of(2025, 1, 1), user),
+                new Todo("todo_2",  LocalDate.of(2025, 1, 1), user),
+                new Todo("todo_3",  LocalDate.of(2025, 1, 1), user)
         );
 
         todoRepository.saveAll(todos);
@@ -60,7 +60,7 @@ class TodoRepositoryTest {
 
     @Test
     void shouldNotFindByUserId() {
-        User anotherUser = new User("AnotherUser", "123");
+        User anotherUser = new User("anotherUsername", "password");
         userRepository.save(anotherUser);
 
         List<Todo> result = todoRepository.findAllByUserId(anotherUser.getId());
