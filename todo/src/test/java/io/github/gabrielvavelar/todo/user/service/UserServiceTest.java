@@ -37,10 +37,7 @@ class UserServiceTest {
     void shouldSaveUser() {
         UserRequestDto dto = new UserRequestDto("username", "password");
 
-        User user = new User();
-        user.setId(UUID.randomUUID());
-        user.setUsername("username");
-        user.setPassword("password");
+        User user = new User("username", "password");
 
         UserResponseDto responseDto = new UserResponseDto(user.getId(), "username");
 
