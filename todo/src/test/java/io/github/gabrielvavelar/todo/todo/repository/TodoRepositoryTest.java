@@ -31,9 +31,9 @@ class TodoRepositoryTest {
         userRepository.save(user);
 
         List<Todo> todos = List.of(
-                new Todo("todo_1",  LocalDate.of(2025, 1, 1), user),
-                new Todo("todo_2",  LocalDate.of(2025, 1, 1), user),
-                new Todo("todo_3",  LocalDate.of(2025, 1, 1), user)
+                new Todo("todo_1",  LocalDate.of(2025, 1, 1), false, user),
+                new Todo("todo_2",  LocalDate.of(2025, 1, 1), false, user),
+                new Todo("todo_3",  LocalDate.of(2025, 1, 1), false, user)
         );
 
         todoRepository.saveAll(todos);

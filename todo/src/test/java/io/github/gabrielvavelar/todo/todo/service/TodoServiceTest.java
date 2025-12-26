@@ -50,7 +50,7 @@ class TodoServiceTest {
     @Test
     void shouldSaveTodo() {
         TodoRequestDto dto = new TodoRequestDto(user.getId(),"todo",  LocalDate.of(2025, 1, 1));
-        Todo todo = new Todo("todo", LocalDate.of(2025, 1, 1), user);
+        Todo todo = new Todo("todo", LocalDate.of(2025, 1, 1), false, user);
         TodoResponseDto responseDto = new TodoResponseDto(todo.getId(),"todo",  LocalDate.of(2025, 1, 1), false);
 
         Mockito.when(userPrincipal.getUser()).thenReturn(user);
@@ -67,7 +67,7 @@ class TodoServiceTest {
 
     @Test
     void shouldDeleteTodo() {
-        Todo todo = new Todo("todo", LocalDate.of(2025, 1, 1), user);
+        Todo todo = new Todo("todo", LocalDate.of(2025, 1, 1), false, user);
 
         Mockito.when(userPrincipal.getUser()).thenReturn(user);
         Mockito.when(todoRepository.findByIdAndUserId(todoId, user.getId()))
@@ -96,7 +96,7 @@ class TodoServiceTest {
         TodoRequestDto dto =
                 new TodoRequestDto(user.getId(), "updated todo", LocalDate.of(2025, 1, 1));
 
-        Todo todo = new Todo("old todo", LocalDate.of(2025, 1, 1), user);
+        Todo todo = new Todo("old todo", LocalDate.of(2025, 1, 1), false, user);
         TodoResponseDto responseDto =
                 new TodoResponseDto(todo.getId(), "updated todo", LocalDate.of(2025, 1, 1), false);
 
@@ -132,8 +132,8 @@ class TodoServiceTest {
 
     @Test
     void shouldReturnAllTodosFromUser() {
-        Todo todo1 = new Todo("todo 1", LocalDate.of(2025, 1, 1), user);
-        Todo todo2 = new Todo("todo 2", LocalDate.of(2025, 2, 1), user);
+        Todo todo1 = new Todo("todo 1", LocalDate.of(2025, 1, 1), false, user);
+        Todo todo2 = new Todo("todo 2", LocalDate.of(2025, 2, 1), false, user);
 
         TodoResponseDto response1 =
                 new TodoResponseDto(todo1.getId(), "todo 1", LocalDate.of(2025, 1, 1), false);
@@ -168,7 +168,7 @@ class TodoServiceTest {
 
     @Test
     void shouldToggleTodoDone() {
-        Todo todo = new Todo("todo", LocalDate.of(2025, 1, 1), user);
+        Todo todo = new Todo("todo", LocalDate.of(2025, 1, 1), false, user);
         todo.setDone(false);
 
         TodoResponseDto responseDto =

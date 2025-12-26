@@ -25,8 +25,9 @@ public class Todo {
 
     public Todo() {}
 
-    public Todo(String description, LocalDate date, User user) {
+    public Todo(String description, LocalDate date, boolean done, User user) {
         this.description = description;
+        this.done = done;
         this.date = date;
         this.user = user;
     }
